@@ -4,8 +4,8 @@ services:
   db:
     image: postgres
     ports:
-      - "5432:5432"
+      - "3030:5432"
     restart: always
     environment:
-      POSTGRES_PASSWORD: changemeninprod!
+      - POSTGRES_PASSWORD=password
 
