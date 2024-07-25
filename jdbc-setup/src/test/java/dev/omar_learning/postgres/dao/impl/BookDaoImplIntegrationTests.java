@@ -10,6 +10,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import dev.omar_learning.postgres.TestDataUtil;
 import org.junit.jupiter.api.extension.ExtendWith;
 import dev.omar_learning.postgres.domain.Book;
+import dev.omar_learning.postgres.domain.Author;
 import java.util.Optional;
 
 @SpringBootTest
@@ -17,16 +18,23 @@ import java.util.Optional;
 public class BookDaoImplIntegrationTests {
 
   private BookDaoImpl underTest;
+  private AuthorDaoImpl authorDao;
 
   @Autowired
-  public BookDaoImplIntegrationTests(BookDaoImpl underTest) {
+  public BookDaoImplIntegrationTests(BookDaoImpl underTest, AuthorDaoImpl authorDao) {
     this.underTest = underTest;
+    this.authorDao = authorDao;
   }
 
   @Test
   public void testThatBookCanBeCreatedAndRecalled() {
-    Book book = TestDataUtil.buildTestBook();
+    // Create author
+    Author author = TestDataUtil.buildTestAuthor();
+    authorDao.create(author);
 
+    // Create Book
+    Book book = TestDataUtil.buildTestBook();
+    book.setAuthorId(author.getId());
     underTest.create(book);
 
     Optional<Book> result = underTest.findOne(book.getIsbn());
