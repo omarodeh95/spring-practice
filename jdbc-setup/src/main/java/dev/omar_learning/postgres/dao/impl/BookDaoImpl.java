@@ -6,8 +6,8 @@ import dev.omar_learning.postgres.dao.BookDao;
 import dev.omar_learning.postgres.domain.Book;
 import java.util.Optional;
 import org.springframework.jdbc.core.RowMapper;
-import java.sql.SQLException;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 
@@ -34,7 +34,7 @@ public class BookDaoImpl implements BookDao {
 
   public static class BookRowMapper implements RowMapper<Book> {
     @Override
-    public Book mapRow(ResultSet rs, int rowNum) {
+    public Book mapRow(ResultSet rs, int rowNum) throws SQLException {
       return Book.builder()
         .isbn(rs.getString("isbn"))
         .title(rs.getString("title"))

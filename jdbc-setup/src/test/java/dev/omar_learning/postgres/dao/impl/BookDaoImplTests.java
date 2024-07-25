@@ -1,4 +1,4 @@
-package dev.omar_learning.postgres.dao;
+package dev.omar_learning.postgres.dao.impl;
 
 import dev.omar_learning.postgres.dao.impl.BookDaoImpl;
 import dev.omar_learning.postgres.domain.Book;
@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import static org.mockito.Mockito.verify;
 import static org.mockito.ArgumentMatchers.eq;
 import org.springframework.jdbc.core.RowMapper;
+import dev.omar_learning.postgres.TestDataUtil;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -28,11 +29,7 @@ public class BookDaoImplTests {
   public void testThatCreateBookGeneratesCorrectSql() {
 
     // I need to create the author for the foreign key
-    Book book = Book.builder()
-      .isbn("123-456-789")
-      .title("Lord of The Ring")
-      .authorId(1L)
-      .build();
+    Book book = TestDataUtil.buildTestBook();
 
     underTest.create(book);
 

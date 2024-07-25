@@ -1,4 +1,4 @@
-package dev.omar_learning.postgres.dao;
+package dev.omar_learning.postgres.dao.impl;
 
 import dev.omar_learning.postgres.dao.impl.AuthorDaoImpl;
 import dev.omar_learning.postgres.domain.Author;
@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import static org.mockito.Mockito.verify;
 import static org.mockito.ArgumentMatchers.eq;
 import org.springframework.jdbc.core.RowMapper;
+import dev.omar_learning.postgres.TestDataUtil;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -26,11 +27,7 @@ public class AuthorDaoImplTests {
 
   @Test
   public void testThatCreateAuthorGeneratesCorrectSql() {
-    Author author = Author.builder()
-      .id(1L)
-      .name("Omar Odeh")
-      .age(90)
-      .build();
+    Author author = TestDataUtil.buildTestAuthor();
 
     underTest.create(author);
 

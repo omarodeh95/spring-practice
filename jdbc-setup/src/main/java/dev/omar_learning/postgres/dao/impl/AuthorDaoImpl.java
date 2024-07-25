@@ -8,11 +8,14 @@ import dev.omar_learning.postgres.domain.Author;
 import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Component;
+
 import java.sql.ResultSet;
 import java.util.Optional;
 import java.util.List;
 
 
+@Component
 public class AuthorDaoImpl implements AuthorDao {
 
   private final JdbcTemplate jdbcTemplate;
