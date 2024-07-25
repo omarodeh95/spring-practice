@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import dev.omar_learning.postgres.TestDataUtil;
@@ -12,9 +14,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import dev.omar_learning.postgres.domain.Book;
 import dev.omar_learning.postgres.domain.Author;
 import java.util.Optional;
+import java.util.List;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
+@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 public class BookDaoImplIntegrationTests {
 
   private BookDaoImpl underTest;
