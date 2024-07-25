@@ -28,6 +28,7 @@ public class AuthorDaoImplIntegrationTests {
     Author author = TestDataUtil.buildTestAuthor();
     underTest.create(author);
     Optional<Author> result = underTest.findOne(author.getId());
+
     assertThat(result).isPresent();
     assertThat(result.get()).isEqualTo(author);
 

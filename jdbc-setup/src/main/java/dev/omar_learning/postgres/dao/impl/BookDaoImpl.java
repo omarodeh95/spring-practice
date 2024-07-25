@@ -6,11 +6,13 @@ import dev.omar_learning.postgres.dao.BookDao;
 import dev.omar_learning.postgres.domain.Book;
 import java.util.Optional;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Component;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-
+@Component
 public class BookDaoImpl implements BookDao {
 
   private final JdbcTemplate jdbcTemplate;
