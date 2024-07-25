@@ -51,4 +51,14 @@ public class BookDaoImplTests {
         eq("123-456-789")
         );
   }
+
+  @Test
+  public void testThatAllBookGeneratesCorrectSql() {
+    underTest.all();
+
+    verify(jdbcTemplate).query(
+        eq("SELECT isbn, title, author_id FROM books"),
+        ArgumentMatchers.<BookDaoImpl.BookRowMapper>any()
+        );
+  }
 }

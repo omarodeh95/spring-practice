@@ -46,4 +46,28 @@ public class BookDaoImplIntegrationTests {
     assertThat(result).isPresent();
     assertThat(result.get()).isEqualTo(book);
   }
+
+  @Test
+  public void testThatMultipleBooksCanBeCreatedAndRecalled() {
+    // Create authors
+    Author authorA = TestDataUtil.buildTestAuthorA();
+    authorDao.create(authorA);
+    Author authorB = TestDataUtil.buildTestAuthorB();
+    authorDao.create(authorB);
+    Author authorC = TestDataUtil.buildTestAuthorC();
+    authorDao.create(authorC);
+
+    // Create books
+    Book bookA = TestDataUtil.buildTestBookA(); // author A
+    underTest.create(bookA);
+    Book bookB = TestDataUtil.buildTestBookB(); // author B
+    underTest.create(bookB);
+    Book bookC = TestDataUtil.buildTestBookC(); // author C
+    underTest.create(bookC);
+
+    List<Book> books = underTest.all();
+
+    assertThat(books).hasSize(3).containsExactly(bookA, bookB, bookC);
+
+  }
 }

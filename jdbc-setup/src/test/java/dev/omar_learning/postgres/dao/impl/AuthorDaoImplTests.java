@@ -51,4 +51,14 @@ public class AuthorDaoImplTests {
         );
 
   }
+
+  @Test
+  public void testThatAllAuthorGeneratesCorrectSql() {
+    underTest.all();
+
+    verify(jdbcTemplate).query(
+        eq("SELECT id, name, age FROM authors"),
+        ArgumentMatchers.<AuthorDaoImpl.AuthorRowMapper>any()
+        );
+  }
 }

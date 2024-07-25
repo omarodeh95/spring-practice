@@ -37,5 +37,20 @@ public class AuthorDaoImplIntegrationTests {
     assertThat(result.get()).isEqualTo(author);
 
   }
+
+  @Test
+  public void testThatMultipleAuthorsCanBeCreatedAndRecalled() {
+    Author authorA = TestDataUtil.buildTestAuthorA();
+    underTest.create(authorA);
+    Author authorB = TestDataUtil.buildTestAuthorB();
+    underTest.create(authorB);
+    Author authorC = TestDataUtil.buildTestAuthorC();
+    underTest.create(authorC);
+
+    List<Author> authors = underTest.all();
+
+    assertThat(authors).hasSize(3).containsExactly(authorA, authorB, authorC);
+
+  }
 }
 
