@@ -72,9 +72,8 @@ public class AuthorDaoImplTests {
     author.setAge(20);
     underTest.update(authorId, author);
 
-    verify(jdbcTemplate).query(
+    verify(jdbcTemplate).update(
         eq("UPDATE authors SET id = ?, name = ?, age = ? WHERE authors.id = ?"),
-        ArgumentMatchers.<AuthorDaoImpl.AuthorRowMapper>any(),
         eq(author.getId()),
         eq(author.getName()),
         eq(author.getAge()),

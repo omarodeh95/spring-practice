@@ -45,19 +45,14 @@ public class BookDaoImpl implements BookDao {
   }
 
   @Override
-  public Optional<Book> update(String isbn, Book newBook) {
-    List<Book> result = jdbcTemplate.query(
+  public void update(String isbn, Book newBook) {
+    jdbcTemplate.update(
         "UPDATE books SET isbn = ?, title = ?, author_id = ? WHERE isbn = ?",
-        new BookRowMapper(),
         newBook.getIsbn(),
         newBook.getTitle(),
         newBook.getAuthorId(),
         isbn
         );
-
-    Optional<Book> updatedBook = result.stream().findFirst();
-
-    return updatedBook;
   }
 
   public static class BookRowMapper implements RowMapper<Book> {

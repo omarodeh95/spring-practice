@@ -52,5 +52,24 @@ public class AuthorDaoImplIntegrationTests {
     assertThat(authors).hasSize(3).containsExactly(authorA, authorB, authorC);
 
   }
-}
 
+  @Test
+  public void testThatAuthorCanBeUpdatedAndRecalled() {
+    Author authorA = TestDataUtil.buildTestAuthorA();
+    underTest.create(authorA);
+
+    Long authorAId = authorA.getId();
+    Author fetchedAuthor = underTest.findOne(authorA.getId()).get();
+
+    fetchedAuthor.setId(4L);
+    fetchedAuthor.setName("Omar");
+    fetchedAuthor.setAge(20);
+
+    underTest.update(authorAId, fetchedAuthor);
+    Optional<Author> updatedAuthor = underTest.findOne(fetchedAuthor.getId());
+
+    assertThat(updatedAuthor).isPresent();
+    assertThat(updatedAuthor.get()).isEqualTo(fetchedAuthor);
+
+  }
+}

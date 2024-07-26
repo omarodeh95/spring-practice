@@ -11,6 +11,6 @@ public interface BookDao {
 
   List<Book> all();
 
-  Optional<Book> update(String isbn, Book newBook);
+  void update(String isbn, Book newBook);
 }
 

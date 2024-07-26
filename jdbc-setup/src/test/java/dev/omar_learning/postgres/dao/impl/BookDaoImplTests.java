@@ -75,9 +75,8 @@ public class BookDaoImplTests {
 
      underTest.update(updatedBookIsbn, book);
 
-     verify(jdbcTemplate).query(
+     verify(jdbcTemplate).update(
          eq("UPDATE books SET isbn = ?, title = ?, author_id = ? WHERE isbn = ?"),
-         ArgumentMatchers.<BookDaoImpl.BookRowMapper>any(),
          eq(book.getIsbn()),
          eq(book.getTitle()),
          eq(book.getAuthorId()),

@@ -47,18 +47,14 @@ public class AuthorDaoImpl implements AuthorDao {
   }
 
   @Override
-  public Optional<Author> update(Long authorId, Author newAuthor) {
-    List<Author> result = jdbcTemplate.query(
+  public void update(Long authorId, Author newAuthor) {
+    jdbcTemplate.update(
         "UPDATE authors SET id = ?, name = ?, age = ? WHERE authors.id = ?", 
-        new AuthorRowMapper(),
         newAuthor.getId(),
         newAuthor.getName(),
         newAuthor.getAge(),
         authorId
         );
-
-    Optional<Author> updateAuthor = result.stream().findFirst();
-    return updateAuthor;
   }
 
 
