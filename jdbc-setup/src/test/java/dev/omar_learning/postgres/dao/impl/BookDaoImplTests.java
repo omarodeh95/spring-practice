@@ -83,4 +83,11 @@ public class BookDaoImplTests {
          eq(updatedBookIsbn)
          );
    }
+
+   @Test
+   public void testThatBookDeleteGeneratesCorrectSql() {
+     Book book = TestDataUtil.buildTestBook();
+
+     underTest.delete(book.getIsbn());
+   }
 }

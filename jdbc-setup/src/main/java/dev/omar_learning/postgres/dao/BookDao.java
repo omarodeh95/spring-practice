@@ -12,5 +12,7 @@ public interface BookDao {
   List<Book> all();
 
   void update(String isbn, Book newBook);
+
+  void delete(String isbn);
 }
 
