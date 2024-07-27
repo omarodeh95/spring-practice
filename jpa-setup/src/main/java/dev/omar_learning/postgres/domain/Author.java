@@ -21,7 +21,7 @@ public class Author {
 
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "author_seq_id")
-  private long id;
+  private Long id;
 
   private String name;
 
