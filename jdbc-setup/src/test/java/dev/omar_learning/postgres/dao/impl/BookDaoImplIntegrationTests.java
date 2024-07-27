@@ -87,7 +87,7 @@ public class BookDaoImplIntegrationTests {
     Book fetchedBook = underTest.findOne(bookA.getIsbn()).get();
 
     fetchedBook.setIsbn("my-test-isbn");
-    fetchedBook.setTitle("Dev to mastery");
+    fetchedBook.setTitle("Zero to mastery");
     fetchedBook.setAuthorId(authorB.getId());
 
     underTest.update(bookAIsbn, fetchedBook);

@@ -69,7 +69,7 @@ public class BookDaoImplTests {
 
      // Update book attributes
      book.setIsbn("543-543-123");
-     book.setTitle("Junior to mastery");
+     book.setTitle("Zero to mastery");
      book.setAuthorId(23L);
 
 
