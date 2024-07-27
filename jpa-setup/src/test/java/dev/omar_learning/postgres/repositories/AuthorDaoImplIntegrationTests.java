@@ -1,4 +1,4 @@
-package dev.omar_learning.postgres.dao.impl;
+package dev.omar_learning.postgres.repositores;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,4 +1,4 @@
-package dev.omar_learning.postgres.dao.impl;
+package dev.omar_learning.postgres.repositories;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
