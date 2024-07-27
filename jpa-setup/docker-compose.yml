@@ -1,0 +1,11 @@
+version: '3.1'
+
+services:
+  db:
+    image: postgres
+    ports:
+      - "3030:5432"
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=password
+
