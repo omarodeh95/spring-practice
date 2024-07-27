@@ -89,4 +89,20 @@ public class AuthorRepositoryIntegrationTests {
     assertThat(deletedAuthor).isNotPresent();
 
   }
+
+  @Test
+  public void testThatGetAuthorsWithAgeLessThan() {
+    Author testAuthorA = TestDataUtil.buildTestAuthorA();
+    Author testAuthorB = TestDataUtil.buildTestAuthorB();
+    Author testAuthorC = TestDataUtil.buildTestAuthorC();
+    underTest.save(testAuthorA);
+    underTest.save(testAuthorB);
+    underTest.save(testAuthorC);
+
+    underTest.ageLessThan(50);
+
+    Iterable<Author> result = underTest.ageLessThan(50);
+    assertThat(result).containsExactly(testAuthorA, testAuthorB);
+
+  }
 }
