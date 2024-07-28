@@ -13,4 +13,6 @@ public interface AuthorService {
   public Optional<Author> findOne(Long authorId);
 
   public boolean isExists(Long authorId);
+
+  public void delete(Long authorId);
 }

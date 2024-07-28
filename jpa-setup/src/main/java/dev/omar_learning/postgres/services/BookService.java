@@ -14,5 +14,7 @@ public interface BookService {
   public Optional<Book> findOne(String isbn);
 
   public boolean isExists(String bookIsbn);
+
+  public void delete(String isbn);
 }
 
