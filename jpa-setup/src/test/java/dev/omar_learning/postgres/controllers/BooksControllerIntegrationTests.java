@@ -119,4 +119,14 @@ public class BooksControllerIntegrationTests {
           MockMvcResultMatchers.jsonPath("$.title").value("Lord of The Rings")
           );
   }
+
+  @Test
+  public void testThatNotFoundBookReturnsHttpStatus404() throws Exception {
+    mockMvc.perform(
+        MockMvcRequestBuilders.get("/books/haha")
+        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(
+          MockMvcResultMatchers.status().isNotFound()
+          );
+  }
 }

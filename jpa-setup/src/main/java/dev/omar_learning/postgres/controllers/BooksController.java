@@ -1,6 +1,7 @@
 package dev.omar_learning.postgres.controllers;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
@@ -48,8 +49,10 @@ public class BooksController {
 
   @GetMapping(path = "/books/{isbn}")
   public ResponseEntity<BookDto> showBook(@PathVariable("isbn") String isbn) {
-    Book fetchedBook = bookService.findOne(isbn);
-
-    return new ResponseEntity<>(bookMapper.mapTo(fetchedBook), HttpStatus.OK);
+    Optional<Book> fetchedBook = bookService.findOne(isbn);
+    return fetchedBook.map(book -> {
+      BookDto bookDto = bookMapper.mapTo(book);
+      return new ResponseEntity<>(bookDto, HttpStatus.OK);
+    }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
   }
 }

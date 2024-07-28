@@ -40,8 +40,8 @@ public class BookServiceImpl implements BookService {
   }
 
   @Override
-  public Book findOne(String isbn) {
-    return bookRepository.findById(isbn).get();
+  public Optional<Book> findOne(String isbn) {
+    return bookRepository.findById(isbn);
   }
 }
 

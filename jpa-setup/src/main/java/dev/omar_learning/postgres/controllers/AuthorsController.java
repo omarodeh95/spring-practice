@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List; // Import List if needed
+import java.util.Optional;
 import java.util.stream.Collectors; // Import needed for stream operations
 
 @RestController
@@ -46,9 +47,12 @@ public class AuthorsController {
 
   @GetMapping(path = "/authors/{authorId}")
   public ResponseEntity<AuthorDto> showAuthor(@PathVariable("authorId") Long authorId) {
-    Author author = authorService.findOne(authorId);
+    Optional<Author> fetchedAuthor = authorService.findOne(authorId);
 
-    return new ResponseEntity<>(authorMapper.mapTo(author), HttpStatus.OK);
+    return fetchedAuthor.map(author -> {
+      AuthorDto authorDto = authorMapper.mapTo(author);
+      return new ResponseEntity<>(authorDto, HttpStatus.OK);
+    }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
   }
 }
 

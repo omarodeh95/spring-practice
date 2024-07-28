@@ -1,6 +1,7 @@
 package dev.omar_learning.postgres.services.impl;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -32,7 +33,7 @@ public class AuthorServiceImpl implements AuthorService {
   }
 
   @Override
-  public Author findOne(Long authorId) {
-    return authorRepository.findById(authorId).get();
+  public Optional<Author> findOne(Long authorId) {
+    return authorRepository.findById(authorId);
   }
 }

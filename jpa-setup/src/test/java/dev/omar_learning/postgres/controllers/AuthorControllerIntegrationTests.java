@@ -129,4 +129,14 @@ public class AuthorControllerIntegrationTests {
           MockMvcResultMatchers.jsonPath("$.id").value(savedAuthor.getId())
           );
   }
+
+  @Test
+  public void testThatNotFoundAuthorReturnsHttpStatus404() throws Exception {
+    mockMvc.perform(
+        MockMvcRequestBuilders.get("/authors/1")
+        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(
+          MockMvcResultMatchers.status().isNotFound()
+          );
+  }
 }
