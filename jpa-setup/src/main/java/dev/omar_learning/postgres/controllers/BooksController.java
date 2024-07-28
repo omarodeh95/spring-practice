@@ -45,4 +45,11 @@ public class BooksController {
     
     return new ResponseEntity<>(bookDtos, HttpStatus.OK);
   }
+
+  @GetMapping(path = "/books/{isbn}")
+  public ResponseEntity<BookDto> showBook(@PathVariable("isbn") String isbn) {
+    Book fetchedBook = bookService.findOne(isbn);
+
+    return new ResponseEntity<>(bookMapper.mapTo(fetchedBook), HttpStatus.OK);
+  }
 }
