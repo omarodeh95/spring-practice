@@ -9,5 +9,7 @@ public interface BookService {
   public Book createBook(String isbn, Book book);
 
   public List<Book> findAll();
+
+  public Book findOne(String isbn);
 }
 

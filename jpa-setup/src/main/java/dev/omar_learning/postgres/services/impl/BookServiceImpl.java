@@ -38,5 +38,10 @@ public class BookServiceImpl implements BookService {
     return StreamSupport.stream(bookRepository.findAll().spliterator(), false)
       .collect(Collectors.toList());
   }
+
+  @Override
+  public Book findOne(String isbn) {
+    return bookRepository.findById(isbn).get();
+  }
 }
 
