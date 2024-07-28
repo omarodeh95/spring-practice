@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dev.omar_learning.postgres.TestDataUtil;
 import dev.omar_learning.postgres.domain.Author;
+import dev.omar_learning.postgres.services.AuthorService;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
@@ -25,11 +26,13 @@ public class AuthorControllerIntegrationTests {
 
   private MockMvc mockMvc;
   private ObjectMapper objectMapper;
+  private AuthorService authorService;
 
   @Autowired
-  public AuthorControllerIntegrationTests(MockMvc mockMvc) {
+  public AuthorControllerIntegrationTests(MockMvc mockMvc, AuthorService authorService) {
     this.mockMvc = mockMvc;
     this.objectMapper = new ObjectMapper();
+    this.authorService = authorService;
   }
 
   @Test
@@ -68,5 +71,33 @@ public class AuthorControllerIntegrationTests {
           MockMvcResultMatchers.jsonPath("$.age").value(90)
           );
 
+  }
+
+  
+  @Test
+  public void testThatListAuthorsReturnsHttpStatus200() throws Exception {
+    mockMvc.perform(
+        MockMvcRequestBuilders.get("/authors")
+        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(
+          MockMvcResultMatchers.status().isOk()
+          );
+  }
+
+  @Test
+  public void testThatListAuthorsReturnsListOfAuthors() throws Exception {
+    Author author = TestDataUtil.buildTestAuthorA();
+    authorService.createAuthor(author);
+
+    mockMvc.perform(
+        MockMvcRequestBuilders.get("/authors")
+        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(
+          MockMvcResultMatchers.jsonPath("$[0].id").isNumber()
+        ).andExpect(
+          MockMvcResultMatchers.jsonPath("$[0].name").value("Omar Odeh")
+        ).andExpect(
+          MockMvcResultMatchers.jsonPath("$[0].age").value(24)
+          );
   }
 }

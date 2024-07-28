@@ -2,6 +2,8 @@ package dev.omar_learning.postgres;
 
 import dev.omar_learning.postgres.domain.Author;
 import dev.omar_learning.postgres.domain.Book;
+import dev.omar_learning.postgres.dto.AuthorDto;
+import dev.omar_learning.postgres.dto.BookDto;
 
 public class TestDataUtil {
 
@@ -10,6 +12,14 @@ public class TestDataUtil {
 
   public static Author buildTestAuthor() {
     return Author.builder()
+      .id(1L)
+      .name("Omar Odeh")
+      .age(90)
+      .build();
+  }
+
+  public static AuthorDto buildTestAuthorDto() {
+    return AuthorDto.builder()
       .id(1L)
       .name("Omar Odeh")
       .age(90)
@@ -41,10 +51,18 @@ public class TestDataUtil {
       .build();
   }
 
+  public static BookDto buildTestBookDto(final AuthorDto authorDto) {
+    return BookDto.builder()
+      .isbn("123-456-789")
+      .title("Lord of The Rings")
+      .author(authorDto)
+      .build();
+  }
+
   public static Book buildTestBook(Author author) {
     return Book.builder()
       .isbn("123-456-789")
-      .title("Lord of The Ring")
+      .title("Lord of The Rings")
       .author(author)
       .build();
   }
@@ -53,7 +71,7 @@ public class TestDataUtil {
   public static Book buildTestBookA(Author author) {
     return Book.builder()
       .isbn("123-456-78910")
-      .title("Lord of The Ring")
+      .title("Lord of The Rings")
       .author(author)
       .build();
   }
@@ -61,7 +79,7 @@ public class TestDataUtil {
   public static Book buildTestBookB(Author author) {
     return Book.builder()
       .isbn("123-456-78911")
-      .title("Lord of The Ring")
+      .title("Lord of The Rings")
       .author(author)
       .build();
   }
@@ -69,7 +87,7 @@ public class TestDataUtil {
   public static Book buildTestBookC(Author author) {
     return Book.builder()
       .isbn("123-456-78912")
-      .title("Lord of The Ring")
+      .title("Lord of The Rings")
       .author(author)
       .build();
   }
