@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List; // Import List if needed
 import java.util.stream.Collectors; // Import needed for stream operations
@@ -41,6 +42,13 @@ public class AuthorsController {
         .collect(Collectors.toList());
     
     return new ResponseEntity<>(authorDtos, HttpStatus.OK);
+  }
+
+  @GetMapping(path = "/authors/{authorId}")
+  public ResponseEntity<AuthorDto> showAuthor(@PathVariable("authorId") Long authorId) {
+    Author author = authorService.findOne(authorId);
+
+    return new ResponseEntity<>(authorMapper.mapTo(author), HttpStatus.OK);
   }
 }
 
