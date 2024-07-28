@@ -8,4 +8,6 @@ public interface AuthorService {
   public Author createAuthor(Author author);
 
   public List<Author> findAll();
+
+  public Author findOne(Long authorId);
 }

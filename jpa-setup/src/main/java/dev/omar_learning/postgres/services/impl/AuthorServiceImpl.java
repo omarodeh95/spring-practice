@@ -30,4 +30,9 @@ public class AuthorServiceImpl implements AuthorService {
     return StreamSupport.stream(authorRepository .findAll() .spliterator(), false)
       .collect(Collectors.toList());
   }
+
+  @Override
+  public Author findOne(Long authorId) {
+    return authorRepository.findById(authorId).get();
+  }
 }
