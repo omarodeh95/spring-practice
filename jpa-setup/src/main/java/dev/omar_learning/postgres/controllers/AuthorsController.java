@@ -51,7 +51,9 @@ public class AuthorsController {
     Optional<Author> fetchedAuthor = authorService.findOne(authorId);
 
     return fetchedAuthor.map(author -> {
+
       AuthorDto authorDto = authorMapper.mapTo(author);
+
       return new ResponseEntity<>(authorDto, HttpStatus.OK);
     }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
   }
@@ -62,9 +64,13 @@ public class AuthorsController {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     } else {
       authorDto.setId(authorId);
+
       Author author = authorMapper.mapFrom(authorDto);
+
       Author updatedAuthor = authorService.save(author);
+
       AuthorDto updatedAuthorDto = authorMapper.mapTo(updatedAuthor);
+
       return new ResponseEntity<>(updatedAuthorDto, HttpStatus.OK);
     }
   }
