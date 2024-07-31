@@ -1,6 +1,4 @@
-package dev.learnkafka.domain;
-
-import dev.learnkafka.domain.Book;
+package dev.learnkafka.library_events_producer.domain;
 
 public record LibraryEvent(
     Integer libraryEventId,
