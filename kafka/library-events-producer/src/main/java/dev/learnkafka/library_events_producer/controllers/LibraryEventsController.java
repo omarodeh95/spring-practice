@@ -3,6 +3,10 @@ package dev.learnkafka.library_events_producer.controllers;
 import dev.learnkafka.library_events_producer.domain.LibraryEvent;
 import dev.learnkafka.library_events_producer.producer.LibraryEventsProducer;
 import org.springframework.http.ResponseEntity;
+
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeoutException;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,9 +27,11 @@ public class LibraryEventsController {
   @PostMapping(path = "/v1/libraryevent")
   public ResponseEntity<LibraryEvent> postLibraryEvent(
       @RequestBody LibraryEvent libraryEvent
-      ) throws JsonProcessingException {
+      ) throws JsonProcessingException, InterruptedException, TimeoutException, ExecutionException {
 
-    libraryEventsProducer.sendLibraryEvent(libraryEvent);
+    // libraryEventsProducer.sendLibraryEvent(libraryEvent);
+
+    libraryEventsProducer.sendLibraryEvent_approach2(libraryEvent);
 
 
     return ResponseEntity.status(HttpStatus.CREATED).body(libraryEvent);

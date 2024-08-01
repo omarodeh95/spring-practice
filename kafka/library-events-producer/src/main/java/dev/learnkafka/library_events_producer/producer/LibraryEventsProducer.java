@@ -9,6 +9,9 @@ import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Component;
 import dev.learnkafka.library_events_producer.domain.LibraryEvent;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 
 @Component
@@ -26,9 +29,30 @@ public class LibraryEventsProducer {
     this.objectMapper = objectMapper;
   }
 
+  // Approach 2
+  public SendResult<Integer, String> sendLibraryEvent_approach2(LibraryEvent libraryEvent) throws ExecutionException, InterruptedException, JsonProcessingException, TimeoutException {
+    var key =  libraryEvent.libraryEventId();
+    var value = objectMapper.writeValueAsString(libraryEvent);
+
+    // Synchronously
+    // first a blocking call happens only for the first time to get meta data about the cluster
+    // block and wait until the message is sent to kafka
+    var sendResult = kafkaTemplate.send(topic, key, value).get(3, TimeUnit.SECONDS);
+
+    handleSuccess(key, value, sendResult);
+
+    return sendResult;
+
+  }
+
+  // Approach 1
   public CompletableFuture<SendResult<Integer, String>> sendLibraryEvent(LibraryEvent libraryEvent) throws JsonProcessingException {
     var key =  libraryEvent.libraryEventId();
     var value = objectMapper.writeValueAsString(libraryEvent);
+
+    // Asynchronously
+    // first a blocking call happens only for the first time to get meta data about the cluster
+    // second  it send the message
     var completableFuture = kafkaTemplate.send(topic, key, value);
 
     return completableFuture.whenComplete((sendResult, throwable ) -> {
