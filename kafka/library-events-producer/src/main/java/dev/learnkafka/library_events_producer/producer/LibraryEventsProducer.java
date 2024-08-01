@@ -3,6 +3,8 @@ package dev.learnkafka.library_events_producer.producer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+
+import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
@@ -28,6 +30,33 @@ public class LibraryEventsProducer {
     this.kafkaTemplate = kafkaTemplate;
     this.objectMapper = objectMapper;
   }
+
+
+  // Approach 3
+  public CompletableFuture<SendResult<Integer, String>> sendLibraryEvent_approach3(LibraryEvent libraryEvent) throws JsonProcessingException {
+    var key =  libraryEvent.libraryEventId();
+    var value = objectMapper.writeValueAsString(libraryEvent);
+
+    // Asynchronously
+    // Using prducer record and it allows for header like http headers
+    var producerRecord = buildProducerRecord(key, value);
+
+    // It is overloaded and it accepts prodcuer record
+    var completableFuture = kafkaTemplate.send(producerRecord);
+
+    return completableFuture.whenComplete((sendResult, throwable ) -> {
+      if (throwable != null) {
+        handleFailure(key, value, throwable);
+      } else {
+        handleSuccess(key, value, sendResult);
+      }
+    });
+  }
+
+  private ProducerRecord<Integer, String> buildProducerRecord(Integer key, String value) {
+    return new ProducerRecord<Integer, String>(topic, key, value);
+  }
+
 
   // Approach 2
   public SendResult<Integer, String> sendLibraryEvent_approach2(LibraryEvent libraryEvent) throws ExecutionException, InterruptedException, JsonProcessingException, TimeoutException {
